@@ -7,7 +7,10 @@ public class LaserController : MonoBehaviour
     public Camera mainCamera;
     public LayerMask targetLayerMask;
     public string targetTag;
+    public string cubePartTag = "кубок парт"; // Тег для объектов, которые требуют обращения к родителю
     public Vector3 newPosition; // Новая позиция по оси Z
+    public float moveSpeed = 5f; // Скорость перемещения
+    public float returnSpeed = 5f; // Скорость возврата
     private GameObject targetedObject;
     private Vector3 originalPosition;
     private bool isDragging;
@@ -28,7 +31,7 @@ public class LaserController : MonoBehaviour
         // Постепенное перемещение объекта по оси Z
         if (isMovingToZ && targetedObject != null)
         {
-            float step = 5f * Time.deltaTime; // Скорость перемещения
+            float step = moveSpeed * Time.deltaTime; // Скорость перемещения
             Vector3 targetPosition = new Vector3(targetedObject.transform.position.x, targetedObject.transform.position.y, newPosition.z);
             targetedObject.transform.position = Vector3.MoveTowards(targetedObject.transform.position, targetPosition, step);
 
@@ -64,10 +67,22 @@ public class LaserController : MonoBehaviour
         if (Physics.Raycast(ray, out hit, 100, targetLayerMask))
         {
             laserEndPosition = hit.point; // Конечная позиция лазера при попадании
-            if (hit.collider.CompareTag(targetTag))
+            GameObject hitObject = hit.collider.gameObject;
+
+            if (hitObject.CompareTag(targetTag) || hitObject.CompareTag(cubePartTag))
             {
-                targetedObject = hit.collider.gameObject;
-                originalPosition = targetedObject.transform.position;
+                targetedObject = hitObject.CompareTag(cubePartTag) ? hitObject.transform.parent.gameObject : hitObject;
+
+                cube cubeScript = targetedObject.GetComponent<cube>();
+                if (cubeScript != null)
+                {
+                    originalPosition = cubeScript.originalPosition;
+                }
+                else
+                {
+                    originalPosition = targetedObject.transform.position;
+                }
+
                 isMovingToZ = true; // Начинаем постепенное перемещение по оси Z
                 isDragging = true;  // Начинаем перемещение курсором
             }
@@ -89,16 +104,25 @@ public class LaserController : MonoBehaviour
     void ReleaseObject()
     {
         isDragging = false;
+        isMovingToZ = false; // Останавливаем любое движение по оси Z
 
         if (targetedObject != null)
         {
-            StartCoroutine(MoveToOriginalPosition());
+            cube cubeScript = targetedObject.GetComponent<cube>();
+            if (cubeScript != null)
+            {
+                cubeScript.MoveToOriginalPosition(returnSpeed);
+            }
+            else
+            {
+                StartCoroutine(MoveToOriginalPosition());
+            }
         }
     }
 
     IEnumerator MoveToOriginalPosition()
     {
-        float step = 5f * Time.deltaTime; // Скорость перемещения
+        float step = returnSpeed * Time.deltaTime; // Скорость перемещения
         while (Vector3.Distance(targetedObject.transform.position, originalPosition) > 0.01f)
         {
             targetedObject.transform.position = Vector3.MoveTowards(targetedObject.transform.position, originalPosition, step);

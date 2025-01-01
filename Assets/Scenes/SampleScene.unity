@@ -1496,9 +1496,10 @@ GameObject:
   - component: {fileID: 570864479}
   - component: {fileID: 570864478}
   - component: {fileID: 570864477}
+  - component: {fileID: 570864480}
   m_Layer: 6
   m_Name: Cube (2)
-  m_TagString: blok
+  m_TagString: cubePart
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1592,6 +1593,23 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 570864475}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &570864480
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 570864475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a00fda28f6db445b937fd7033cd49f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitEmptyCell: 0
+  laserDistance: 10
+  targetLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1001 &571066062
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2910,7 +2928,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   targetTag: blok
-  newPosition: {x: 0, y: 0, z: 0}
+  cubePartTag: cubePart
+  newPosition: {x: 0, y: 0, z: -2}
+  moveSpeed: 5
+  returnSpeed: 5
 --- !u!1001 &980653788
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4944,9 +4965,10 @@ GameObject:
   - component: {fileID: 1773209926}
   - component: {fileID: 1773209925}
   - component: {fileID: 1773209924}
+  - component: {fileID: 1773209927}
   m_Layer: 6
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: cubePart
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5040,6 +5062,23 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1773209922}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &1773209927
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1773209922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6a00fda28f6db445b937fd7033cd49f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitEmptyCell: 0
+  laserDistance: 10
+  targetLayerMask:
+    serializedVersion: 2
+    m_Bits: 128
 --- !u!1001 &1773490069
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5179,7 +5218,7 @@ GameObject:
   - component: {fileID: 1826100725}
   m_Layer: 6
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: cubePart
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5285,6 +5324,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a00fda28f6db445b937fd7033cd49f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitEmptyCell: 0
+  laserDistance: 10
+  targetLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1001 &1851841191
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5643,6 +5687,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f937af763c51455f8b269d16c4a99aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  originalPosition: {x: 0, y: 0, z: 0}
 --- !u!1001 &1893937128
 PrefabInstance:
   m_ObjectHideFlags: 0
